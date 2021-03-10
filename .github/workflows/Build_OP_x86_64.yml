@@ -88,7 +88,7 @@ jobs:
         git clone https://github.com/lisaac/luci-app-diskman.git diskman
         cp -r diskman/applications/luci-app-diskman  luci-app-diskman
         git clone https://github.com/lisaac/luci-app-dockerman.git dockerman
-        cp -r diskman/applications/luci-app-dockerman  luci-app-dockerman
+        cp -r dockerman/applications/luci-app-dockerman  luci-app-dockerman
 
     - name: Configuration Customization - Build_x86_64
       env:
