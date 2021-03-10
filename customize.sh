@@ -7,7 +7,7 @@
 #=================================================
 
 # 修改默认 IP
-sed -i 's/192.168.1.1/192.168.2.252/g' openwrt/package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.2.1/g' openwrt/package/base-files/files/bin/config_generate
 
 # 删除默认密码，默认为 password
 sed -i '/shadow/d' openwrt/package/lean/default-settings/files/zzz-default-settings
