@@ -82,6 +82,9 @@ jobs:
         cp OpenClash/luci-app-openclash luci-app-openclash
         rm -rf OpenClash
         git clone https://github.com/project-lede/luci-app-godproxy.git
+        git clone https://github.com/linkease/ddnsto-openwrt
+        cp ddnsto-openwrt/luci-app-ddnsto luci-app-ddnsto
+        cp ddnsto-openwrt/ddnsto ../network/services/ddnsto
 
     - name: Configuration Customization - Build_x86_64
       env:
