@@ -11,14 +11,14 @@ on:
   release:
     types: [published]
 
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 
-  #schedule:
+  # schedule:
   #  - cron: 0 8 * * 5
  
-  #watch:
+  # watch:
   #  types: [started]
 
 jobs:
