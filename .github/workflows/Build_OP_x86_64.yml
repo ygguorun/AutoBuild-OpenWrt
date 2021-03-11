@@ -11,9 +11,9 @@ on:
   release:
     types: [published]
 
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
   # schedule:
   #  - cron: 0 8 * * 5
@@ -79,14 +79,14 @@ jobs:
         cd package
         mkdir Third_party && cd Third_party
         git clone https://github.com/vernesong/OpenClash.git
-        cp OpenClash/luci-app-openclash luci-app-openclash
+        cp -r OpenClash/luci-app-openclash luci-app-openclash
         rm -rf OpenClash
         git clone https://github.com/project-lede/luci-app-godproxy.git
         git clone https://github.com/linkease/ddnsto-openwrt.git
-        cp ddnsto-openwrt/luci-app-ddnsto luci-app-ddnsto
-        cp ddnsto-openwrt/ddnsto ../network/services/ddnsto
+        cp -r ddnsto-openwrt/luci-app-ddnsto luci-app-ddnsto
+        cp -r ddnsto-openwrt/ddnsto ../network/services/ddnsto
         git clone https://github.com/lisaac/luci-app-diskman.git diskman
-        cp diskman/applications/luci-app-diskman  luci-app-diskman
+        cp -r diskman/applications/luci-app-diskman  luci-app-diskman
 
     - name: Configuration Customization - Build_x86_64
       env:
