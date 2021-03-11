@@ -14,4 +14,14 @@
 
 ## 致谢
 
+### OpenWrt 源码
+
 - https://github.com/coolsnowwolf/lede
+
+### 第三方插件
+
+- https://github.com/project-lede/luci-app-godproxy
+
+- https://github.com/linkease/ddnsto-openwrt
+
+- https://github.com/lisaac/luci-app-diskman
