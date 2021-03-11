@@ -87,8 +87,6 @@ jobs:
         cp ddnsto-openwrt/ddnsto ../network/services/ddnsto
         git clone https://github.com/lisaac/luci-app-diskman.git diskman
         cp diskman/applications/luci-app-diskman  luci-app-diskman
-        git clone https://github.com/lisaac/luci-app-dockerman.git dockerman
-        cp diskman/applications/luci-app-dockerman  luci-app-dockerman
 
     - name: Configuration Customization - Build_x86_64
       env:
