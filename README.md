@@ -25,3 +25,7 @@
 - https://github.com/linkease/ddnsto-openwrt
 
 - https://github.com/lisaac/luci-app-diskman
+
+- https://github.com/lisaac/luci-lib-docker
+
+- https://github.com/lisaac/luci-app-dockerman
