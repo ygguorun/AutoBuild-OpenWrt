@@ -16,7 +16,7 @@ on:
       - main
 
   schedule:
-    - cron: 0 10 5 * *
+    - cron: 0 0 5 * *
  
   # watch:
   #  types: [started]
@@ -55,7 +55,7 @@ jobs:
           php* \
           android*
         sudo -E apt-get update
-        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex node-uglify git gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
         sudo -E apt-get -y autoremove --purge
         sudo -E apt-get clean
         df -h
@@ -91,9 +91,11 @@ jobs:
         git clone --depth 1 https://github.com/linkease/ddnsto-openwrt.git
         cp -r ddnsto-openwrt/luci-app-ddnsto luci-app-ddnsto
         cp -r ddnsto-openwrt/ddnsto ../network/services/ddnsto
+        rm -rf ddnsto-openwrt
         # luci-app-diskman
         git clone --depth 1 https://github.com/lisaac/luci-app-diskman.git diskman
         cp -r diskman/applications/luci-app-diskman  luci-app-diskman
+        rm -rf diskman
         # #luci-lib-docker
         # rm -rf ../lean/luci-lib-docker
         # git clone --depth 1 https://github.com/lisaac/luci-lib-docker.git docker_lib
@@ -122,6 +124,7 @@ jobs:
     - name: Build firmware
       working-directory: ./openwrt
       run: |
+        df -h
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
 
