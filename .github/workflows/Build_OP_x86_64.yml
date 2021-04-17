@@ -88,10 +88,10 @@ jobs:
         # luci-app-godproxy
         git clone --depth 1 https://github.com/project-lede/luci-app-godproxy.git
         # luci-app-ddnsto
-        git clone --depth 1 https://github.com/linkease/ddnsto-openwrt.git
-        cp -r ddnsto-openwrt/luci-app-ddnsto luci-app-ddnsto
-        cp -r ddnsto-openwrt/ddnsto ../network/services/ddnsto
-        rm -rf ddnsto-openwrt
+        git clone --depth 1 https://github.com/linkease/nas-packages.git
+        cp -r nas-packages/luci/luci-app-ddnsto luci-app-ddnsto
+        cp -r nas-packages/network/services/ddnsto ../network/services/ddnsto
+        rm -rf nas-packages
         # luci-app-diskman
         git clone --depth 1 https://github.com/lisaac/luci-app-diskman.git diskman
         cp -r diskman/applications/luci-app-diskman  luci-app-diskman
