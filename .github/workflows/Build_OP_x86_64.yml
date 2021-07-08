@@ -17,7 +17,7 @@ on:
 
   schedule:
     - cron: 0 0 5 * *
- 
+
   # watch:
   #  types: [started]
 
@@ -26,110 +26,110 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
 
-    - name: Initialization environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        docker rmi `docker images -q`
-        echo "Deleting files, please wait ..."
-        sudo rm -rf \
-          /usr/share/dotnet \
-          /etc/mysql \
-          /etc/php \
-          /etc/apt/sources.list.d
-        sudo -E apt-get -y purge \
-          azure-cli \
-          ghc* \
-          zulu* \
-          hhvm \
-          llvm* \
-          firefox \
-          google* \
-          dotnet* \
-          powershell \
-          openjdk* \
-          mysql* \
-          php* \
-          android*
-        sudo -E apt-get update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
-        sudo -E apt-get -y autoremove --purge
-        sudo -E apt-get clean
-        df -h
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          docker rmi `docker images -q`
+          echo "Deleting files, please wait ..."
+          sudo rm -rf \
+            /usr/share/dotnet \
+            /etc/mysql \
+            /etc/php \
+            /etc/apt/sources.list.d
+          sudo -E apt-get -y purge \
+            azure-cli \
+            ghc* \
+            zulu* \
+            hhvm \
+            llvm* \
+            firefox \
+            google* \
+            dotnet* \
+            powershell \
+            openjdk* \
+            mysql* \
+            php* \
+            android*
+          sudo -E apt-get update
+          sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+          df -h
 
-    - name: Clone source code
-      env:
-        REPO_URL: https://github.com/coolsnowwolf/lede
-        REPO_BRANCH: master
-      run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-        cd openwrt
-        echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
-       
-    - name: Update & Install feeds
-      working-directory: ./openwrt
-      run: |
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        ./scripts/feeds install -a
+      - name: Clone source code
+        env:
+          REPO_URL: https://github.com/coolsnowwolf/lede
+          REPO_BRANCH: master
+        run: |
+          git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+          cd openwrt
+          echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
 
-    - name: Download Third_party code
-      working-directory: ./openwrt
-      run: |
-        cd package
-        mkdir Third_party && cd Third_party
-        # luci-app-openclash
-        git clone --depth 1 https://github.com/vernesong/OpenClash.git
-        cp -r OpenClash/luci-app-openclash luci-app-openclash
-        rm -rf OpenClash
-        # luci-app-godproxy
-        git clone --depth 1 https://github.com/project-lede/luci-app-godproxy.git
-        # luci-app-ddnsto
-        git clone --depth 1 https://github.com/linkease/nas-packages.git
-        cp -r nas-packages/luci/luci-app-ddnsto luci-app-ddnsto
-        cp -r nas-packages/network/services/ddnsto ../network/services/ddnsto
-        rm -rf nas-packages
-        # luci-app-diskman
-        git clone --depth 1 https://github.com/lisaac/luci-app-diskman.git diskman
-        cp -r diskman/applications/luci-app-diskman  luci-app-diskman
-        rm -rf diskman
-        # #luci-lib-docker
-        # rm -rf ../lean/luci-lib-docker
-        # git clone --depth 1 https://github.com/lisaac/luci-lib-docker.git docker_lib
-        # cp -r docker_lib/collections/luci-lib-docker  luci-lib-docker
-        # rm -rf docker_lib
-        # #luci-app-dockerman
-        # git clone --depth 1 https://github.com/lisaac/luci-app-dockerman.git dockerman
-        # cp -r dockerman/applications/luci-app-dockerman  luci-app-dockerman
-        # rm -rf dockerman
+      - name: Update & Install feeds
+        working-directory: ./openwrt
+        run: |
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          ./scripts/feeds install -a
 
-    - name: Configuration Customization - Build_x86_64
-      env:
-        CONFIG_FILE: 'x86_64.config'
-      run: |
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x ./customize.sh && ./customize.sh
-        cd openwrt && make defconfig
-       
-    - name: Download package
-      working-directory: ./openwrt
-      run: |
-        make download -j$(nproc)
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
+      - name: Download Third_party code
+        working-directory: ./openwrt
+        run: |
+          cd package
+          mkdir Third_party && cd Third_party
+          # luci-app-openclash
+          git clone --depth 1 https://github.com/vernesong/OpenClash.git
+          cp -r OpenClash/luci-app-openclash luci-app-openclash
+          rm -rf OpenClash
+          # luci-app-godproxy
+          git clone --depth 1 https://github.com/project-lede/luci-app-godproxy.git
+          # luci-app-ddnsto
+          git clone --depth 1 https://github.com/linkease/nas-packages.git
+          cp -r nas-packages/luci/luci-app-ddnsto luci-app-ddnsto
+          cp -r nas-packages/network/services/ddnsto ../network/services/ddnsto
+          rm -rf nas-packages
+          # luci-app-diskman
+          git clone --depth 1 https://github.com/lisaac/luci-app-diskman.git diskman
+          cp -r diskman/applications/luci-app-diskman  luci-app-diskman
+          rm -rf diskman
+          # #luci-lib-docker
+          # rm -rf ../lean/luci-lib-docker
+          # git clone --depth 1 https://github.com/lisaac/luci-lib-docker.git docker_lib
+          # cp -r docker_lib/collections/luci-lib-docker  luci-lib-docker
+          # rm -rf docker_lib
+          # #luci-app-dockerman
+          # git clone --depth 1 https://github.com/lisaac/luci-app-dockerman.git dockerman
+          # cp -r dockerman/applications/luci-app-dockerman  luci-app-dockerman
+          # rm -rf dockerman
 
-    - name: Build firmware
-      working-directory: ./openwrt
-      run: |
-        df -h
-        echo -e "$(nproc) thread build."
-        make -j$(nproc) V=s
+      - name: Configuration Customization - Build_x86_64
+        env:
+          CONFIG_FILE: "x86_64.config"
+        run: |
+          [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+          chmod +x ./customize.sh && ./customize.sh
+          cd openwrt && make defconfig
 
-    - name : Upload artifact
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt
-        path: openwrt/bin
+      - name: Download package
+        working-directory: ./openwrt
+        run: |
+          make download -j$(nproc)
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
+
+      - name: Build firmware
+        working-directory: ./openwrt
+        run: |
+          df -h
+          echo -e "$(nproc) thread build."
+          make -j$(nproc) V=s
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: OpenWrt
+          path: openwrt/bin
