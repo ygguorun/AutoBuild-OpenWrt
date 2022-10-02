@@ -66,6 +66,7 @@ jobs:
           cd openwrt
           echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
           echo 'src-git nas https://github.com/linkease/nas-packages.git;master' >> feeds.conf.default
+          echo 'src-git nas_luci https://github.com/linkease/nas-packages-luci.git;main' >> feeds.conf.default
 
       - name: Update & Install feeds
         working-directory: ./openwrt
